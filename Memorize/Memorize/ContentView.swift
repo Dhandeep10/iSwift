@@ -8,24 +8,44 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var cardCount: Int = 4
     var body: some View {
         VStack{
-            let emojis = ["⍺", "β", "𝛄"]
+            let emojis = ["⍺", "β", "𝛄", "𝛅", "𝜃", "μ", "𝛜"]
+            
             HStack {
-                CardView(isFaceUp: false, content: emojis[0])
-                CardView(isFaceUp: false, content: emojis[1])
-                CardView(isFaceUp: false, content: emojis[2])
+                ForEach(0..<cardCount, id: \.self) {
+                    index in CardView(content: emojis[index])
+                }
             }
+//            HStack {
+//                ForEach(0..<3, id: \.self) {
+//                    index in CardView(content: emojis[index])
+//                }
+//            }
+//            HStack {
+//                CardView(isFaceUp: false, content: emojis[0])
+//                CardView(isFaceUp: false, content: emojis[1])
+//                CardView(isFaceUp: false, content: emojis[2])
+//            }
             HStack {
-                CardView(isFaceUp: false, content: emojis[0])
-                CardView(isFaceUp: false, content: emojis[1])
-                CardView(isFaceUp: false, content: emojis[2])
+                Button(action: {
+                    if (cardCount > 1){
+                        cardCount -= 1
+                    }
+                }, label: {
+                    Image(systemName: "rectangle.stack.fill.badge.minus")
+                })
+                Spacer()
+                Button(action: {
+                    if (cardCount < emojis.count) {
+                        cardCount += 1
+                    }
+                }, label: {
+                    Image(systemName: "rectangle.stack.fill.badge.plus")
+                })
             }
-            HStack {
-                CardView(isFaceUp: false, content: emojis[0])
-                CardView(isFaceUp: false, content: emojis[1])
-                CardView(isFaceUp: false, content: emojis[2])
-            }
+            .font(.largeTitle)
         }
         .padding()
     }
