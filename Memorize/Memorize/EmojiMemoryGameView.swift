@@ -7,21 +7,31 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct EmojiMemoryGameView: View {
+    var viewModel: EmojiMemoryGame = EmojiMemoryGame()
+    
     @State var cardCount: Int = 4
     let emojis = ["⍺", "β", "𝛄", "𝛅", "𝜃", "μ", "𝛜"]
     
     var body: some View {
-        VStack{
             ScrollView{
                 cards
             }
-            Spacer()
-            cardCountAdjuster
-        }
+
         .padding()
     }
     
+    var cards: some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))]){
+            ForEach(emojis.indices, id: \.self) {
+                index in CardView(content: emojis[index])
+                    .aspectRatio(2/3, contentMode: .fit)
+            }
+            .foregroundColor(.gray)
+        }
+    }
+    
+    /*
     var cardCountAdjuster: some View {
         HStack {
             cardRemover
@@ -29,16 +39,6 @@ struct ContentView: View {
             cardAdder
         }
         .font(.largeTitle)
-    }
-    
-    var cards: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))]){
-            ForEach(0..<cardCount, id: \.self) {
-                index in CardView(content: emojis[index])
-                    .aspectRatio(2/3, contentMode: .fit)
-            }
-            .foregroundColor(.gray)
-        }
     }
     
     func cardCountAdjuster(by offset: Int, symbol: String) -> some View {
@@ -57,6 +57,7 @@ struct ContentView: View {
     var cardAdder: some View {
         return cardCountAdjuster(by: 1, symbol: "rectangle.stack.fill.badge.plus")
     }
+     */
 }
 
 struct CardView: View {
@@ -79,8 +80,8 @@ struct CardView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct EmojiMemoryGameView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        EmojiMemoryGameView()
     }
 }
